@@ -1,42 +1,41 @@
 import * as express from 'express';
 import {ApiUser} from "../models/apiUser.model";
 import ApiUserService from "../services/apiUser.Service";
+import {ApiKeys} from "../models/apiKey.model";
+import * as fs from "fs";
 
 class ApiUserController {
     public path = '/api-users';
     public router = express.Router();
 
-    private apiUsers: ApiUser[] = [
-        {
-            name: 'API User 1',
-            timezone: '',
-            group: [],
-            creationTime: 1,
-            id: '',
-            accessToken: '',
-            profiles: []
-        }
-    ];
-    private apiUserService: ApiUserService;
+    private apiUserService: ApiUserService = new ApiUserService();
+    public apiKeys: ApiKeys;
 
     constructor() {
         this.intializeRoutes();
+        this.apiKeys = this.getApiKeys(process.env.API_KEYS_FILENAME);
     }
 
     public intializeRoutes() {
-        this.router.get(this.path, this.getAllApiUsers);
-        this.router.post(this.path, this.createApiUser);
+        this.router.get(this.path + `/:id`, this.getApiUser);
+        this.router.get(this.path + `/`, this.getAllApiUsers);
     }
 
-    getAllApiUsers = (request: express.Request, response: express.Response) => {
-        //response.send(this.apiUsers);
-        this.apiUserService.findAll();
+    public getApiKeys(path: string): ApiKeys {
+        var content = fs.readFileSync(`./`+ path, `UTF8`);
+        return JSON.parse(content);
+    }
+
+    getApiUser = (req: express.Request, resp: express.Response) => {
+        const apiu = this.apiUserService.findOne(this.apiKeys.data[0], req.params.id).then(function (response) {
+            resp.send(response);
+        })
     };
 
-    createApiUser = (request: express.Request, response: express.Response) => {
-        const apiUser: ApiUser = request.body;
-        this.apiUsers.push(apiUser);
-        response.send(apiUser);
+    getAllApiUsers = (req: express.Request, resp: express.Response) => {
+        const apiu = this.apiUserService.findAll(this.apiKeys.data[0]).then(function (response) {
+            resp.send(response);
+        })
     };
 }
 

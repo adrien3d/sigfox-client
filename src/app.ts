@@ -18,8 +18,14 @@ class App {
         });
     }
 
+    public loggerMiddleware(request: express.Request, response: express.Response, next) {
+        console.log(`${request.method} ${request.path}`);
+        next();
+    }
+
     private initializeMiddlewares() {
         this.app.use(bodyParser.json());
+        this.app.use(this.loggerMiddleware)
     }
 
     private initializeControllers(controllers) {

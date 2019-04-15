@@ -1,42 +1,43 @@
 import {ApiUser, ApiUsers} from "../models/apiUser.model";
+import {ApiKey, ApiKeys} from "../models/apiKey.model";
 
 const axios = require('axios');
 
 class ApiUserService {
-    public findOne(id: string): Promise<ApiUser | undefined> {
+    constructor () {
+    }
+
+    public findOne(apiKey: ApiKey, id: string): Promise<ApiUser | undefined> {
         console.log('Find one api user');
         return axios.get('https://api.sigfox.com/v2/api-users/' + id, {
             auth: {
-                username: ``,
-                password: ``
+                username: apiKey.sigfoxKey,
+                password: apiKey.sigfoxSecret
             }
         })
         .then(function (response: any) {
-            //console.log(response.data);
-            response.data.map((re: any) => {
-                    console.log(re);
-                }
-            )
+            return response.data;
         })
         .catch(function (error: any) {
             console.log(error.response);
         });
     }
 
-    public findAll(): Promise<ApiUsers> {
+    public findAll(apiKey: ApiKey): Promise<ApiUsers> {
         console.log('Find all api users');
         return axios.get('https://api.sigfox.com/v2/api-users/', {
             auth: {
-                username: ``,
-                password: ``
+                username: apiKey.sigfoxKey,
+                password: apiKey.sigfoxSecret
             }
         })
-        .then(function (response: any) {
-            //console.log(response.data);
-            response.data.map((re: any) => {
-                    console.log(re);
-                }
-            )
+        .then(function (response) {
+            /*var apiu : ApiUsers  = {
+                data: response.data.data,
+                paging: response.data.paging
+            };
+            return apiu;*/
+            return response.data;
         })
         .catch(function (error: any) {
             console.log(error.response);
