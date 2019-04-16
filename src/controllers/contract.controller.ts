@@ -1,13 +1,13 @@
 import * as express from 'express';
-import ApiUserService from "../services/apiUser.Service";
 import {ApiKeys} from "../models/apiKey.model";
 import * as fs from "fs";
+import ContractService from "../services/contract.service";
 
-class ApiUserController {
-    public path = '/api-users';
+class ContractController {
+    public path = '/contract-infos';
     public router = express.Router();
 
-    private apiUserService: ApiUserService = new ApiUserService();
+    private contractService: ContractService = new ContractService();
     public apiKeys: ApiKeys;
 
     constructor() {
@@ -26,16 +26,16 @@ class ApiUserController {
     }
 
     getApiUser = (req: express.Request, resp: express.Response) => {
-        const apiu = this.apiUserService.findOne(this.apiKeys.data[0], req.params.id).then(function (response) {
+        const apiu = this.contractService.findOne(this.apiKeys.data[0], req.params.id).then(function (response) {
             resp.send(response);
         })
     };
 
     getAllApiUsers = (req: express.Request, resp: express.Response) => {
-        const apiu = this.apiUserService.findAll(this.apiKeys.data[0]).then(function (response) {
+        const apiu = this.contractService.findAll(this.apiKeys.data[0]).then(function (response) {
             resp.send(response);
         })
     };
 }
 
-export default ApiUserController;
+export default ContractController;

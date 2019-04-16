@@ -1,15 +1,15 @@
-import {ApiUser, ApiUsers} from "../models/apiUser.model";
 import {ApiKey} from "../models/apiKey.model";
+import {Contract} from "../models/contract.model";
 
 const axios = require('axios');
 
-class ApiUserService {
+class ContractService {
     constructor () {
     }
 
-    public findOne(apiKey: ApiKey, id: string): Promise<ApiUser> {
+    public findOne(apiKey: ApiKey, id: string): Promise<Contract> {
         console.log('Find one api user');
-        return axios.get('https://api.sigfox.com/v2/api-users/' + id, {
+        return axios.get('https://api.sigfox.com/v2/contract-infos/' + id, {
             auth: {
                 username: apiKey.sigfoxKey,
                 password: apiKey.sigfoxSecret
@@ -23,20 +23,15 @@ class ApiUserService {
         });
     }
 
-    public findAll(apiKey: ApiKey): Promise<ApiUsers> {
+    public findAll(apiKey: ApiKey): Promise<Contract> {
         console.log('Find all api users');
-        return axios.get('https://api.sigfox.com/v2/api-users/', {
+        return axios.get('https://api.sigfox.com/v2/contract-infos/', {
             auth: {
                 username: apiKey.sigfoxKey,
                 password: apiKey.sigfoxSecret
             }
         })
         .then(function (response) {
-            /*var apiu : ApiUsers  = {
-                data: response.data.data,
-                paging: response.data.paging
-            };
-            return apiu;*/
             return response.data;
         })
         .catch(function (error: any) {
@@ -45,4 +40,4 @@ class ApiUserService {
     }
 }
 
-export default ApiUserService;
+export default ContractService;
