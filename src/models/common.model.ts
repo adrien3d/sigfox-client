@@ -1,17 +1,20 @@
-interface Group {
+export interface Group {
     id: string;
     name: string;
     type: string;
     level: number;
 }
 
-interface IdName {
+export interface IdName {
     id: string;
     name: string;
 }
 
-interface NextURL {
-    next: string;
+export interface IdKey {
+    id: string;
+    key: string;
 }
 
-export {Group, IdName, NextURL}
+export interface NextURL {
+    next: string;
+}

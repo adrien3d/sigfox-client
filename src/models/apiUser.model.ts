@@ -1,6 +1,6 @@
 import {Group, IdName, NextURL} from "./common.model";
 
-interface ApiUser {
+export interface ApiUser {
     name: string;
     timezone: string;
     group: Group[];
@@ -10,9 +10,7 @@ interface ApiUser {
     profiles: IdName[];
 }
 
-interface ApiUsers {
+export interface ApiUsers {
     data: ApiUser[];
     paging: NextURL;
 }
-
-export {ApiUser, ApiUsers}

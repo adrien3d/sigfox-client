@@ -41,3 +41,23 @@ export interface Contract {
     tokensUsed: number;
     nextContractInfo: IdName;
 }
+
+// Contract Restart job
+
+export interface Error {
+    entity: string;
+    message: string;
+    type: number;
+}
+
+export interface Status {
+    total: number;
+    nbSuccess: number;
+    nbErrors: number;
+    errors: Error[];
+}
+
+export interface ContractJob {
+    jobDone: boolean;
+    status: Status;
+}

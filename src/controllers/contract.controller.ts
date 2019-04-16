@@ -16,8 +16,10 @@ class ContractController {
     }
 
     public intializeRoutes() {
-        this.router.get(this.path + `/:id`, this.getApiUser);
-        this.router.get(this.path + `/`, this.getAllApiUsers);
+        this.router.get(this.path + `/:id`, this.getContract);
+        this.router.get(this.path + `/`, this.getAllContracts);
+        this.router.get(this.path + `/:jobId/status`, this.getJobStatus);
+        this.router.get(this.path + `/:id/devices`, this.getDevices);
     }
 
     public getApiKeys(path: string): ApiKeys {
@@ -25,14 +27,26 @@ class ContractController {
         return JSON.parse(content);
     }
 
-    getApiUser = (req: express.Request, resp: express.Response) => {
-        const apiu = this.contractService.findOne(this.apiKeys.data[0], req.params.id).then(function (response) {
+    getContract = (req: express.Request, resp: express.Response) => {
+        this.contractService.findOne(this.apiKeys.data[0], req.params.id).then(function (response) {
             resp.send(response);
         })
     };
 
-    getAllApiUsers = (req: express.Request, resp: express.Response) => {
-        const apiu = this.contractService.findAll(this.apiKeys.data[0]).then(function (response) {
+    getAllContracts = (req: express.Request, resp: express.Response) => {
+        this.contractService.findAll(this.apiKeys.data[0]).then(function (response) {
+            resp.send(response);
+        })
+    };
+
+    getJobStatus = (req: express.Request, resp: express.Response) => {
+        this.contractService.jobStatus(this.apiKeys.data[0], req.params.jobId).then(function (response) {
+            resp.send(response);
+        })
+    };
+
+    getDevices = (req: express.Request, resp: express.Response) => {
+        this.contractService.devices(this.apiKeys.data[0], req.params.id).then(function (response) {
             resp.send(response);
         })
     };

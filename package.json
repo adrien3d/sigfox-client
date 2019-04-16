@@ -1,6 +1,6 @@
 {
   "name": "sigfox-client",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Sigfox Client is a Node wrapper around Sigfox API v2",
   "main": "index.js",
   "scripts": {

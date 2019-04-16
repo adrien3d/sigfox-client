@@ -26,13 +26,13 @@ class ApiUserController {
     }
 
     getApiUser = (req: express.Request, resp: express.Response) => {
-        const apiu = this.apiUserService.findOne(this.apiKeys.data[0], req.params.id).then(function (response) {
+        this.apiUserService.findOne(this.apiKeys.data[0], req.params.id).then(function (response) {
             resp.send(response);
         })
     };
 
     getAllApiUsers = (req: express.Request, resp: express.Response) => {
-        const apiu = this.apiUserService.findAll(this.apiKeys.data[0]).then(function (response) {
+        this.apiUserService.findAll(this.apiKeys.data[0]).then(function (response) {
             resp.send(response);
         })
     };
