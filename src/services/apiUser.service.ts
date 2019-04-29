@@ -1,5 +1,6 @@
 import {ApiUser, ApiUsers} from "../models/apiUser.model";
 import {ApiKey} from "../models/apiKey.model";
+import logError from "../utils/utils";
 
 const axios = require('axios');
 
@@ -19,7 +20,7 @@ class ApiUserService {
             return response.data;
         })
         .catch(function (error: any) {
-            console.log(error.response);
+            return logError(error);
         });
     }
 
@@ -40,7 +41,7 @@ class ApiUserService {
             return response.data;
         })
         .catch(function (error: any) {
-            console.log(error.response);
+            return logError(error);
         });
     }
 }

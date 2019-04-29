@@ -1,6 +1,7 @@
 import {ApiKey} from "../models/apiKey.model";
 import {Contract, ContractJob} from "../models/contract.model";
 import {Devices} from "../models/devices.model";
+import logError from "../utils/utils";
 
 const axios = require('axios');
 
@@ -20,7 +21,7 @@ class ContractService {
             return response.data;
         })
         .catch(function (error: any) {
-            console.log(error.response);
+            logError(error);
         });
     }
 
@@ -36,7 +37,7 @@ class ContractService {
             return response.data;
         })
         .catch(function (error: any) {
-            console.log(error.response);
+            logError(error);
         });
     }
 
@@ -52,7 +53,7 @@ class ContractService {
             return response.data;
         })
         .catch(function (error: any) {
-            console.log(error.response);
+            logError(error);
         });
     }
 
@@ -68,7 +69,7 @@ class ContractService {
             return response.data;
         })
         .catch(function (error: any) {
-            console.log(error.response);
+            logError(error);
         });
     }
 }
